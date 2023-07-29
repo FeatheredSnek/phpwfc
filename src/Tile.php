@@ -5,12 +5,16 @@ namespace WFC;
 class Tile
 {
     public string $image;
-    public int $xPos;
-    public int $yPos;
+    public array $sockets;
 
-    public function __construct(int $xPos = 0, int $yPos = 0, string $image = '') {
+    public function __construct(string $image, array $sockets)
+    {
         $this->image = $image;
-        $this->xPos = $xPos;
-        $this->yPos = $yPos;
+        $this->sockets = $sockets;
+    }
+
+    public function getSocketAtDirection(string $direction)
+    {
+        return $this->sockets[$direction];
     }
 }

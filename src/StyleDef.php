@@ -23,4 +23,8 @@ final class StyleDef
     {
         return (string) $this;
     }
+
+    public function addProperty(string $name, string|int|float $value) {
+        $this->definition[$name] = (string) $value;
+    } 
 }

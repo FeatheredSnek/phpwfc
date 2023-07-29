@@ -3,7 +3,7 @@
 namespace Output;
 
 use Output\GridRendererSetup;
-use WFC\Tile;
+use WFC\GridTile as Tile;
 use Output\HTMLElement;
 use Output\StyleDef;
 
@@ -46,10 +46,22 @@ final class GridRenderer {
                 'grid-row' => "$tile->yPos / auto",
                 'width' => '100%',
                 'height' => '100%',
-                'outline' => '1px solid blue',
-                'background-color' => $tile->image ? $tile->image : self::randomHSL(), 
+                'outline' => '1px solid lightgray',
+                'background-size' => 'cover',
+                'background-color' => '#333',
             ]);
-            array_push($tileElements, new HTMLElement('div', $tileStyleDef));
+            if (isset($tile->image)) {
+                $tileStyleDef->addProperty('background-image', $tile->image);
+            }
+
+            $tileElement = null;
+            if (isset($tile->content)) {
+                $tileElement = new HTMLElement('div', $tileStyleDef, null, $tile->content);
+            } else {
+                $tileElement = new HTMLElement('div', $tileStyleDef);
+            }
+            
+            array_push($tileElements, $tileElement);
         }
 
         $gridElement = new HTMLElement('div', $gridStyleDef, $tileElements);
