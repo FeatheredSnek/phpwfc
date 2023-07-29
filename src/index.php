@@ -48,14 +48,14 @@ $allTiles = [
     'down' => new Tile('/tiles/demo/down.png', ['N' => 0, 'E' => 1, 'S' => 1, 'W' => 1]),
     'left' => new Tile('/tiles/demo/left.png', ['N' => 1, 'E' => 0, 'S' => 1, 'W' => 1]),
     'right' => new Tile('/tiles/demo/right.png', ['N' => 1, 'E' => 1, 'S' => 1, 'W' => 0]),
-    'up' => new Tile('/tiles/demo/right.png', ['N' => 1, 'E' => 1, 'S' => 0, 'W' => 1]),
+    'up' => new Tile('/tiles/demo/up.png', ['N' => 1, 'E' => 1, 'S' => 0, 'W' => 1]),
 ];
 
 
 // generate cells for the grid
 for ($i=0; $i < $gridSize; $i++) { 
     for ($j=0; $j < $gridSize; $j++) { 
-        $cells[] = new Cell($i, $j, array_keys($allTiles));
+        $cells[] = new Cell($i, $j, $allTiles);
     }
 }
 
@@ -96,15 +96,7 @@ $lowestEntropy = count($allTiles);
 
 
 
-function getOpposite($direction) {
-    $opposites = [
-        'N' => 'S',
-        'S' => 'N',
-        'E' => 'W',
-        'W' => 'E'
-    ];
-    return $opposites[$direction];
-}
+
 
 
 
@@ -140,7 +132,7 @@ foreach ($lowestEntropyCellsKeys as $k => $cellKey) {
         $cells[$cellKey]->collapse();
         break;
     } catch (Exception $e) {
-        echo $e->getMessage();
+        continue;
     }
 }
 
@@ -148,6 +140,7 @@ foreach ($lowestEntropyCellsKeys as $k => $cellKey) {
 // recalculate entropy for all non-collapsed cells
 foreach ($cells as $cellIndex => $cell) {
     if ($cell->collapsed) {
+        // echo "cell $cellIndex collapsed, continue<br/>";
         continue;
     }
 
@@ -156,46 +149,36 @@ foreach ($cells as $cellIndex => $cell) {
     foreach ($cellNeighbors as $neighborDirection => $neighborIndex) {
         $neighborCell = $cells[$neighborIndex];
         if ($neighborCell->collapsed) {
+            $requiredSocket = $neighborCell->result->getRequiredSocketAtDirection($neighborDirection);
+            
             // echo "cell index $cellIndex neighbor index $neighborIndex, ";
             // echo "neighborcell result: $neighborCell->result";
-            $requiredSocket = $allTiles[$neighborCell->result]->getSocketAtDirection(getOpposite($neighborDirection));
             // echo "there has to be a socket $requiredSocket at $neighborDirection in cell $cellIndex, <br/>";
             
-            $filteredOptions = array_filter($cell->options, function ($option) use ($allTiles, $neighborDirection, $requiredSocket) {
+            $filteredOptions = array_filter($cell->options, function ($option) use ($neighborDirection, $requiredSocket) {
                 // echo "it has option $option, ";
-                $optionSocket = $allTiles[$option]->getSocketAtDirection($neighborDirection);
+                $optionSocket = $option->getSocketAtDirection($neighborDirection);
                 // echo "and this option has socket $optionSocket at $neighborDirection, ";
                 $isOptionValid = $optionSocket === $requiredSocket;
-                $str = $isOptionValid ? "valid" : "invalid";
+                // $str = $isOptionValid ? "valid" : "invalid";
                 // echo "therefore it is $str";
                 // echo "<br/>";
                 return $isOptionValid;
             });
             $cell->options = $filteredOptions;
             // echo "that leaves following options for cell $cellIndex <br/>";
-            // var_dump($cell->options);
+            // var_dump(array_keys($cell->options));
             // echo "<br/>";
         }
     }
 }
-
-
-// ?? break here - no more non-collapsed cells?
-// if ($nonZeroEntropyCellCount === 0) {
-    // break;
-// }
-
-# code...
-
-
-
 
 }
 
 $setup = new GridRendererSetup($gridSize, $gridSize, 150);
 $gridTiles = [];
 foreach ($cells as $index => $cell) {
-    $cellImagePath = isset($cell->result) ? "url(/tiles/demo/$cell->result.png)" : null;
+    $cellImagePath = isset($cell->result) ? "url($cell->result)" : null;
 
     $neighborsText = var_export($cell->options, 1);
     $cellContent = "INDEX: $index, OPTIONS: $neighborsText";

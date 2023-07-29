@@ -8,10 +8,9 @@ class Cell
 {
     public bool $collapsed = false;
     public array $options;
-    public string $result;
+    public Tile $result;
     public int $xPos;
     public int $yPos;
-    // public int $entropy;
 
     public array $neighbors = [];
 
@@ -19,7 +18,6 @@ class Cell
         $this->options = $options;
         $this->xPos = $xPos;
         $this->yPos = $yPos;
-        // $this->entropy = count($options);
     }
 
     public function collapse() : void
@@ -33,8 +31,8 @@ class Cell
         }
 
         $this->collapsed = true;
-        $randomOptionKey = array_rand($this->options);
-        $this->result = $this->options[$randomOptionKey];
+        $resultKey = array_rand($this->options);
+        $this->result = $this->options[$resultKey];
         $this->options = [];
     }
 
@@ -51,5 +49,10 @@ class Cell
     public function getEntropy() : int
     {
         return $this->collapsed ? 0 : count($this->options); 
+    }
+
+    public function getResult() : ?Tile
+    {
+        return $this->result;
     }
 }

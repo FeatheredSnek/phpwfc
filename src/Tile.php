@@ -17,4 +17,25 @@ class Tile
     {
         return $this->sockets[$direction];
     }
+
+    public function getRequiredSocketAtDirection(string $direction)
+    {
+        return $this->sockets[self::getOpposite($direction)];
+    }
+
+    public function __toString()
+    {
+        return $this->image;
+    }
+
+    private static function getOpposite(string $direction) : string 
+    {
+        $opposites = [
+            'N' => 'S',
+            'S' => 'N',
+            'E' => 'W',
+            'W' => 'E'
+        ];
+        return $opposites[$direction];
+    }
 }
