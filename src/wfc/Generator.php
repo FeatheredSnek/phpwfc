@@ -71,8 +71,6 @@ class Generator
             $maxIterations = pow($this->size, 2);
         }
 
-        echo $maxIterations;
-
         while ((!$result instanceof Generator) && $iteration < $maxIterations) {
             $result = $this->observe();
             $iteration++;

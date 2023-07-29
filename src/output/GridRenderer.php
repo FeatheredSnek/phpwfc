@@ -2,11 +2,6 @@
 
 namespace Output;
 
-use Output\GridRendererSetup;
-use WFC\GridTile as Tile;
-use Output\HTMLElement;
-use Output\StyleDef;
-
 final class GridRenderer {
 
     protected GridRendererSetup $setup;
@@ -15,7 +10,7 @@ final class GridRenderer {
 
     /**
      * @param GridRendererSetup $setup
-     * @param Tile[] $tiles
+     * @param GridTile[] $tiles
      */
     public function __construct(GridRendererSetup $setup = null, iterable $tiles = [])
     {

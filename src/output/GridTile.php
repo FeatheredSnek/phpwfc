@@ -1,6 +1,6 @@
 <?php
 
-namespace WFC;
+namespace Output;
 
 class GridTile
 {
