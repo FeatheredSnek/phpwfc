@@ -21,6 +21,8 @@ class Generator
 
 
     public function init() {
+        $this->cells = [];
+
         // generate cells for the grid
         for ($i = 0; $i < $this->size; $i++) { 
             for ($j = 0; $j < $this->size; $j++) { 
@@ -62,18 +64,32 @@ class Generator
     }
 
 
-    public function compute(int $maxIterations = null) : Generator
-    {
-        $iteration = 0;
+    public function compute(?int $maxAttempts = null) : Generator {
+        $currentAttempt = 0;
         $result = null;
-        
-        if (!isset($maxIterations)) {
-            $maxIterations = pow($this->size, 2);
+
+        if (!isset($maxAttempts)) {
+            $maxAttempts = $this->size;
         }
 
-        while ((!$result instanceof Generator) && $iteration < $maxIterations) {
-            $result = $this->observe();
-            $iteration++;
+        while ($currentAttempt < $maxAttempts) {
+            $this->init();
+            while (!($result instanceof Generator)) {
+                try {
+                    $result = $this->observe();
+                } catch (Exception $e) {
+                    break;
+                }
+            }
+
+            if ($result instanceof Generator) {
+                break;
+            }
+
+            $currentAttempt++;
+            if ($this->debug) {
+                echo "attempt $currentAttempt of $maxAttempts completed <br/>";
+            }
         }
 
         return $this;
@@ -111,7 +127,10 @@ class Generator
                 $this->cells[$cellKey]->collapse();
                 break;
             } catch (Exception $e) {
-                continue;
+                if ($this->debug) {
+                    echo $e->getMessage();
+                }
+                throw $e;
             }
         }
 

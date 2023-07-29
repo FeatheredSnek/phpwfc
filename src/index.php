@@ -12,7 +12,7 @@ include __DIR__ . '/wfc/Generator.php';
 
 include __DIR__ . '/App.php';
 
-$app = new App();
+$app = new App(10, 'circuit');
 echo $app->run();
 
 exit;
