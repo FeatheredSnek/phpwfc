@@ -16,8 +16,12 @@ use WFC\Generator;
 use WFC\GridTile;
 use WFC\Tile;
 
+
+// setup debug
+$debug = false;
+
 // setup size
-$gridSize = 3;
+$gridSize = 13;
 
 // setup tiles
 $allTiles = [
@@ -28,20 +32,24 @@ $allTiles = [
     new Tile('/tiles/demo/up.png', ['N' => 1, 'E' => 1, 'S' => 0, 'W' => 1]),
 ];
 
-$generator = new Generator($gridSize, $allTiles);
+$generator = new Generator($gridSize, $allTiles, $debug);
 
 $cells2 = $generator
     ->init()
     ->compute()
     ->getCells();
 
-$setup = new GridRendererSetup($gridSize, $gridSize, 150);
+$setup = new GridRendererSetup($gridSize, $gridSize, 30);
 $gridTiles = [];
 foreach ($cells2 as $index => $cell) {
     $cellImagePath = isset($cell->result) ? "url($cell->result)" : null;
 
-    $neighborsText = var_export($cell->options, 1);
-    $cellContent = "INDEX: $index, OPTIONS: $neighborsText";
+    $cellContent = '';
+
+    if ($debug) {
+        $neighborsText = var_export($cell->options, 1);
+        $cellContent = "INDEX: $index, OPTIONS: $neighborsText";
+    }
 
     $gridTiles[] = new GridTile($cell->xPos + 1, $cell->yPos + 1, $cellImagePath, $cellContent);
 }
