@@ -9,10 +9,12 @@ include __DIR__ . '/output/GridRendererSetup.php';
 include __DIR__ . '/wfc/Tile.php';
 include __DIR__ . '/wfc/Cell.php';
 include __DIR__ . '/wfc/Generator.php';
+include __DIR__ . '/wfc/TilesFactory.php';
+include __DIR__ . '/wfc/TileDefinition.php';
 
 include __DIR__ . '/App.php';
 
-$app = new App(10, 'circuit');
+$app = new App(10, 'rotatedCircuit');
 echo $app->run();
 
 exit;

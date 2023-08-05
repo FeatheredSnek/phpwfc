@@ -48,6 +48,9 @@ final class GridRenderer {
             if (isset($tile->image)) {
                 $tileStyleDef->addProperty('background-image', $tile->image);
             }
+            if (isset($tile->rotation)) {
+                $tileStyleDef->addProperty('transform', "rotate({$tile->rotation}deg)");
+            }
 
             $tileElement = null;
             if (isset($tile->content)) {

@@ -5,6 +5,8 @@ use Output\GridRendererSetup;
 use Output\GridTile;
 use WFC\Generator;
 use WFC\Tile;
+use WFC\TileDefinition;
+use WFC\TilesFactory;
 
 final class App
 {
@@ -45,7 +47,23 @@ final class App
             new Tile('/tiles/circuit/12.png', ['N' => 'grn', 'E' => 'lim', 'S' => 'grn', 'W' => 'lim']),
         ];
 
-        $tileSets = ['demo' => $demoTiles, 'circuit' => $circuitTiles];
+        $circuitTileDefinitions = [
+            new TileDefinition('/tiles/circuit/1.png', ['N' => 'grn', 'E' => 'grn', 'S' => 'grn', 'W' => 'grn']),
+            new TileDefinition('/tiles/circuit/2.png', ['N' => 'grn', 'E' => 'lim', 'S' => 'grn', 'W' => 'grn'], true),
+            new TileDefinition('/tiles/circuit/3.png', ['N' => 'grn', 'E' => 'whi', 'S' => 'grn', 'W' => 'whi'], true),
+            new TileDefinition('/tiles/circuit/6.png', ['N' => 'grn', 'E' => 'lim', 'S' => 'grn', 'W' => 'lim'], true),
+            new TileDefinition('/tiles/circuit/7.png', ['N' => 'whi', 'E' => 'lim', 'S' => 'whi', 'W' => 'lim'], true),
+            new TileDefinition('/tiles/circuit/8.png', ['N' => 'whi', 'E' => 'grn', 'S' => 'lim', 'W' => 'grn'], true),
+            new TileDefinition('/tiles/circuit/9.png', ['N' => 'lim', 'E' => 'lim', 'S' => 'grn', 'W' => 'lim'], true),
+            new TileDefinition('/tiles/circuit/10.png', ['N' => 'lim', 'E' => 'lim', 'S' => 'lim', 'W' => 'lim'], true),
+            new TileDefinition('/tiles/circuit/11.png', ['N' => 'lim', 'E' => 'lim', 'S' => 'grn', 'W' => 'grn'], true),
+            new TileDefinition('/tiles/circuit/12.png', ['N' => 'grn', 'E' => 'lim', 'S' => 'grn', 'W' => 'lim'], true),
+        ];
+
+        $circuitTileFactory = new TilesFactory($circuitTileDefinitions, true);
+        $rotatedCircuitTiles = $circuitTileFactory->createTiles();
+
+        $tileSets = ['demo' => $demoTiles, 'circuit' => $circuitTiles, 'rotatedCircuit' => $rotatedCircuitTiles];
         $allTiles = $tileSets[$this->tileSet];
 
         $generator = new Generator($this->size, $allTiles, $this->debug);
@@ -66,7 +84,12 @@ final class App
                 $cellContent = "INDEX: $index, OPTIONS: $neighborsText";
             }
 
-            $gridTiles[] = new GridTile($cell->xPos + 1, $cell->yPos + 1, $cellImagePath, $cellContent);
+            $tileRotation = null;
+            if (isset($cell->result)) {
+                $tileRotation = $cell->result->rotation;
+            }
+
+            $gridTiles[] = new GridTile($cell->xPos + 1, $cell->yPos + 1, $cellImagePath, $cellContent, $tileRotation);
         }
         $renderer = new GridRenderer($setup, $gridTiles);
         return $renderer->render();

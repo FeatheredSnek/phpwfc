@@ -2,15 +2,18 @@
 
 namespace WFC;
 
+// TODO abstract tile will need only $resource and $sockets 
 class Tile
 {
     public string $image;
     public array $sockets;
+    public ?int $rotation;
 
-    public function __construct(string $image, array $sockets)
+    public function __construct(string $image, array $sockets, ?int $rotation = null)
     {
         $this->image = $image;
         $this->sockets = $sockets;
+        $this->rotation = $rotation;
     }
 
     public function getSocketAtDirection(string $direction)
