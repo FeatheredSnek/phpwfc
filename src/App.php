@@ -3,17 +3,17 @@
 use Output\GridRenderer;
 use Output\GridRendererSetup;
 use Output\GridTile;
-use WFC\Generator;
-use WFC\Tile;
-use WFC\TileDefinition;
-use WFC\TilesFactory;
+use WFC\Grid2D\Generator;
+use WFC\Grid2D\Tile;
+use WFC\Grid2D\TileDefinition;
+use WFC\Grid2D\TilesFactory;
 
 final class App
 {
     protected int $size = 10;
     protected string $tileSet = 'demo';
     
-    private bool $debug = true;
+    private bool $debug = false;
     
 
     public function __construct(int $size = 10, string $tileSet = 'demo') {
@@ -110,7 +110,7 @@ final class App
             ->compute()
             ->getCells();
 
-        $setup = new GridRendererSetup($this->size, $this->size, 30, true);
+        $setup = new GridRendererSetup($this->size, $this->size, 30, $this->debug);
         $gridTiles = [];
         foreach ($cells2 as $index => $cell) {
             $cellImagePath = isset($cell->result) ? "url($cell->result)" : null;

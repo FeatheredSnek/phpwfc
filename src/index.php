@@ -6,11 +6,15 @@ include __DIR__ . '/output/GridTile.php';
 include __DIR__ . '/output/GridRenderer.php';
 include __DIR__ . '/output/GridRendererSetup.php';
 
-include __DIR__ . '/wfc/Tile.php';
-include __DIR__ . '/wfc/Cell.php';
-include __DIR__ . '/wfc/Generator.php';
-include __DIR__ . '/wfc/TilesFactory.php';
-include __DIR__ . '/wfc/TileDefinition.php';
+include __DIR__ . '/wfc/AbstractTile.php';
+include __DIR__ . '/wfc/AbstractCell.php';
+include __DIR__ . '/wfc/AbstractGenerator.php';
+
+include __DIR__ . '/wfc/grid2d/Tile.php';
+include __DIR__ . '/wfc/grid2d/Cell.php';
+include __DIR__ . '/wfc/grid2d/Generator.php';
+include __DIR__ . '/wfc/grid2d/TilesFactory.php';
+include __DIR__ . '/wfc/grid2d/TileDefinition.php';
 
 include __DIR__ . '/App.php';
 

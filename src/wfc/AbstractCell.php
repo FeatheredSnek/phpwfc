@@ -4,26 +4,20 @@ namespace WFC;
 
 use Exception;
 
-class Cell
+abstract class AbstractCell
 {
     public bool $collapsed = false;
     public array $options;
-    public Tile $result;
-    public int $xPos;
-    public int $yPos;
-
+    public $result;
     public array $neighbors = [];
 
-    public function __construct(int $xPos = 0, int $yPos = 0, array $options = []) {
-        $this->options = $options;
-        $this->xPos = $xPos;
-        $this->yPos = $yPos;
-    }
+    abstract public function getIdentifier() : string;
+
 
     public function collapse() : void
     {
         if (empty($this->options)) {
-            throw new Exception("no options available for cell $this->xPos, $this->yPos");
+            throw new Exception("no options available for cell {$this->getIdentifier()}");
         }
 
         if ($this->collapsed) {
@@ -51,7 +45,7 @@ class Cell
         return $this->collapsed ? 0 : count($this->options); 
     }
 
-    public function getResult() : ?Tile
+    public function getResult() : ?self
     {
         return $this->result;
     }

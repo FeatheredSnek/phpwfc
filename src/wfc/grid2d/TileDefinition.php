@@ -1,6 +1,6 @@
 <?php
 
-namespace WFC;
+namespace WFC\Grid2D;
 
 use Exception;
 

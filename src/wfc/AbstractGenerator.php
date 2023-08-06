@@ -4,69 +4,22 @@ namespace WFC;
 
 use Exception;
 
-class Generator
+abstract class AbstractGenerator
 {
     public int $size;
     public array $tiles;
     
-    private array $cells = [];
-    private bool $debug = false;
-    private bool $verbose = false;
+    protected array $cells = [];
+    protected bool $debug = false;
+    protected bool $verbose = false;
 
 
-    public function __construct(int $size, array $tiles, $debug = false, $verbose = false) {
-        $this->size = $size;
-        $this->tiles = $tiles;
-        $this->debug = $debug;
-        $this->verbose = $verbose;
-    }
+    abstract public function __construct(int $size, array $tiles, $debug = false, $verbose = false);
+
+    abstract protected function init() : self;
 
 
-    public function init() {
-        $this->cells = [];
-
-        // generate cells for the grid
-        for ($i = 0; $i < $this->size; $i++) { 
-            for ($j = 0; $j < $this->size; $j++) { 
-                $this->cells[] = new Cell($i, $j, $this->tiles);
-            }
-        }
-        
-        // set cell neighbors
-        foreach ($this->cells as $cell) {
-            $neighboringCoordinates = [
-                'N' => [
-                    'xPos' => $cell->xPos, 
-                    'yPos' => $cell->yPos - 1,
-                ],
-                'S' => [
-                    'xPos' => $cell->xPos, 
-                    'yPos' => $cell->yPos + 1,
-                ],
-                'E' => [
-                    'xPos' => $cell->xPos + 1, 
-                    'yPos' => $cell->yPos,
-                ],
-                'W' => [
-                    'xPos' => $cell->xPos - 1, 
-                    'yPos' => $cell->yPos,
-                ],
-            ];
-            foreach ($neighboringCoordinates as $direction => $coordinates) {
-                $key = self::array_search_func($this->cells, function ($c) use ($coordinates) {
-                    return $c->xPos === $coordinates['xPos'] && $c->yPos === $coordinates['yPos'];
-                });
-                
-                if ($key >= 0) {
-                    $cell->addNeighbor($direction, $key);
-                }
-            }
-        }
-        return $this;
-    }
-
-
-    public function compute(?int $maxAttempts = null) : Generator {
+    public function compute(?int $maxAttempts = null) : self {
         $currentAttempt = 0;
         $result = null;
 
@@ -76,7 +29,7 @@ class Generator
 
         while ($currentAttempt < $maxAttempts) {
             $this->init();
-            while (!($result instanceof Generator)) {
+            while (!($result instanceof AbstractGenerator)) {
                 try {
                     $result = $this->observe();
                 } catch (Exception $e) {
@@ -84,7 +37,7 @@ class Generator
                 }
             }
 
-            if ($result instanceof Generator) {
+            if ($result instanceof AbstractGenerator) {
                 break;
             }
 
@@ -98,7 +51,7 @@ class Generator
     }
 
 
-    private function observe() : ?Generator
+    private function observe() : ?self
     {
         // get the lowest entropy
         $lowestEntropy = count($this->tiles);
@@ -183,18 +136,9 @@ class Generator
     }
 
 
-    public function getCells()
+    public function getCells() : array
     {
         return $this->cells;
     }
 
-
-    public static function array_search_func(array $arr, callable $func)
-    {
-        foreach ($arr as $key => $v)
-            if ($func($v))
-                return $key;
-    
-        return -1;
-    }
 }
