@@ -8,18 +8,21 @@ final class HTMLElement
     public string $content;
     public StyleDef|string $style;
     public ?iterable $children;
+    public string $debugAttr;
 
     public function __construct(
         string $element = 'div', 
         StyleDef|string $style = '', 
         iterable $children = null, 
-        string $content = ''
+        string $content = '',
+        string $debugAttr = ''
     ) 
     {
         $this->element = $element;
         $this->content = $content;
         $this->style = $style;
         $this->children = $children;
+        $this->debugAttr = $debugAttr;
     }
 
     public function __toString()
@@ -32,7 +35,15 @@ final class HTMLElement
                 }
             }
         }
-        return "<$this->element style='$this->style'>$markupContent</$this->element>";
+
+        $debugAttrStripped = htmlspecialchars(strip_tags($this->debugAttr));
+        $debugAttr = $this->debugAttr ? "data-debug='$debugAttrStripped'" : '';  
+        
+        return "
+            <$this->element style='$this->style' $debugAttr>
+                $markupContent
+            </$this->element>
+        ";
     }
 
     public function getMarkup() : string
@@ -49,6 +60,12 @@ final class HTMLElement
     public function setChildren(iterable $children) : HTMLElement
     {
         $this->children = $children;
+        return $this;
+    }
+
+    public function setDebugAttr(string $debugAttr) : HTMLElement
+    {
+        $this->debugAttr = $debugAttr;
         return $this;
     }
 }

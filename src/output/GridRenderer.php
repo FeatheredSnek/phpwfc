@@ -28,10 +28,10 @@ final class GridRenderer {
         
         $gridStyleDef = new StyleDef([
             'display' => 'grid',
-            'grid-template-columns' => "repeat($cols, $size" . 'px)',
-            'grid-template-rows' => "repeat($rows, $size" . 'px)',
-            'width' => $width . 'px',
-            'height' => $height . 'px',
+            'grid-template-columns' => "repeat($cols, {$size}px)",
+            'grid-template-rows' => "repeat($rows, {$size}px)",
+            'width' => "{$width}px",
+            'height' => "{$height}px",
         ]);
 
         $tileElements = [];
@@ -41,7 +41,6 @@ final class GridRenderer {
                 'grid-row' => "$tile->yPos / auto",
                 'width' => '100%',
                 'height' => '100%',
-                'outline' => '1px solid lightgray',
                 'background-size' => 'cover',
                 'background-color' => '#333',
             ]);
@@ -51,12 +50,17 @@ final class GridRenderer {
             if (isset($tile->rotation)) {
                 $tileStyleDef->addProperty('transform', "rotate({$tile->rotation}deg)");
             }
+            if ($this->setup->debugMode) {
+                $tileStyleDef->addProperty('outline', '1px solid lightgray');
+            }
 
-            $tileElement = null;
+            $tileElement = new HTMLElement('div', $tileStyleDef);
+
             if (isset($tile->content)) {
-                $tileElement = new HTMLElement('div', $tileStyleDef, null, $tile->content);
-            } else {
-                $tileElement = new HTMLElement('div', $tileStyleDef);
+                $tileElement->setContent($tile->content);
+            }
+            if (isset($tile->debugInfo)) {
+                $tileElement->setDebugAttr($tile->debugInfo);
             }
             
             array_push($tileElements, $tileElement);

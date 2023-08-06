@@ -13,7 +13,7 @@ final class App
     protected int $size = 10;
     protected string $tileSet = 'demo';
     
-    private bool $debug = false;
+    private bool $debug = true;
     
 
     public function __construct(int $size = 10, string $tileSet = 'demo') {
@@ -110,25 +110,25 @@ final class App
             ->compute()
             ->getCells();
 
-        $setup = new GridRendererSetup($this->size, $this->size, 30);
+        $setup = new GridRendererSetup($this->size, $this->size, 30, true);
         $gridTiles = [];
         foreach ($cells2 as $index => $cell) {
             $cellImagePath = isset($cell->result) ? "url($cell->result)" : null;
 
             $cellContent = '';
+            $debugSocketInfo = null;
 
             if ($this->debug) {
-                $neighborsText = var_export($cell->options, 1);
-                $cellContent = "INDEX: $index, OPTIONS: $neighborsText";
+                $cellContent = (string) $index;
+                $debugSocketInfo = var_export($cell->result->sockets, 1);
             }
 
             $tileRotation = null;
             if (isset($cell->result)) {
                 $tileRotation = $cell->result->rotation;
-                // $cellContent = var_export($cell->result->sockets, 1);
             }
 
-            $gridTiles[] = new GridTile($cell->xPos + 1, $cell->yPos + 1, $cellImagePath, $cellContent, $tileRotation);
+            $gridTiles[] = new GridTile($cell->xPos + 1, $cell->yPos + 1, $cellImagePath, $cellContent, $tileRotation, $debugSocketInfo);
         }
         $renderer = new GridRenderer($setup, $gridTiles);
         return $renderer->render();

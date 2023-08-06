@@ -14,7 +14,7 @@ include __DIR__ . '/wfc/TileDefinition.php';
 
 include __DIR__ . '/App.php';
 
-$app = new App(10, 'rotatedCircuit');
+$app = new App(10, 'fullCircuit');
 echo $app->run();
 
 exit;

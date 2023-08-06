@@ -11,12 +11,14 @@ class Generator
     
     private array $cells = [];
     private bool $debug = false;
+    private bool $verbose = false;
 
 
-    public function __construct(int $size, array $tiles, $debug = false) {
+    public function __construct(int $size, array $tiles, $debug = false, $verbose = false) {
         $this->size = $size;
         $this->tiles = $tiles;
         $this->debug = $debug;
+        $this->verbose = $verbose;
     }
 
 
@@ -147,7 +149,7 @@ class Generator
                 if ($neighborCell->collapsed) {
                     $requiredSocket = $neighborCell->result->getRequiredSocketAtDirection($neighborDirection);
                     
-                    if ($this->debug) {
+                    if ($this->debug && $this->verbose) {
                         echo "cell index $cellIndex neighbor index $neighborIndex, ";
                         echo "neighbor cell result: $neighborCell->result";
                         echo "there has to be a socket $requiredSocket at $neighborDirection in cell $cellIndex, <br/>";
@@ -157,7 +159,7 @@ class Generator
                         $optionSocket = $option->getSocketAtDirection($neighborDirection);
                         $isOptionValid = $optionSocket === $requiredSocket;
                         
-                        if ($this->debug) {
+                        if ($this->debug && $this->verbose) {
                             $str = $isOptionValid ? "valid" : "invalid";
                             echo "it has option $option, ";
                             echo "and this option has socket $optionSocket at $neighborDirection, ";
@@ -169,7 +171,7 @@ class Generator
                     });
                     $cell->options = $filteredOptions;
 
-                    if ($this->debug) {
+                    if ($this->debug && $this->verbose) {
                         echo "that leaves following options for cell $cellIndex <br/>";
                         echo var_export(array_keys($cell->options, 1));
                         echo "<br/>";
