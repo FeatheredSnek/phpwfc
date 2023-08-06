@@ -8,6 +8,7 @@ abstract class AbstractCell
 {
     public bool $collapsed = false;
     public array $options;
+    /** @var ?AbstractTile */
     public $result;
     public array $neighbors = [];
 

@@ -6,6 +6,7 @@ use WFC\AbstractCell;
 
 class Cell extends AbstractCell
 {
+    /** @var ?Tile */
     public $result;
     public int $xPos;
     public int $yPos;
