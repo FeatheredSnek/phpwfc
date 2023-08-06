@@ -7,6 +7,23 @@ final class TilesFactory
     private array $tiles = [];
     private array $tileSet = [];
     private bool $removeDuplicates = true;
+    
+    private const ROTATION_UNITARY = 0;
+    private const ROTATION_ARRAY = 1;
+
+    private const ROTATION_TRANSFORMS = [
+        ['N' => 'N', 'E' => 'E', 'S' => 'S', 'W' => 'W'],
+        ['N' => 'W', 'E' => 'N', 'S' => 'E', 'W' => 'S'],
+        ['N' => 'S', 'E' => 'W', 'S' => 'N', 'W' => 'E'],
+        ['N' => 'E', 'E' => 'S', 'S' => 'W', 'W' => 'N'],
+    ];
+
+    private const DIRECTION_TYPES = [
+        'N' => 'plain',
+        'E' => 'plain',
+        'S' => 'reversed',
+        'W' => 'reversed',
+    ];
 
 
     public function __construct($tileSet, bool $removeDuplicates = true) {
@@ -36,8 +53,12 @@ final class TilesFactory
         if ($tileDefinition->rotate) {
             $uniqueSocketsCollections = [];
 
-            for ($i = 1; $i < 3; $i++) {
-                $rotatedSockets = self::rotateSockets($tileDefinition->sockets, $i);
+            for ($i = 1; $i < 4; $i++) {
+                $rotationMode = 
+                    $tileDefinition->socketType === TileDefinition::ARRAY_SOCKET || $tileDefinition->socketType === TileDefinition::DELIMITED_SOCKET 
+                        ? self::ROTATION_ARRAY
+                        : self::ROTATION_UNITARY;
+                $rotatedSockets = self::rotateSockets($tileDefinition->sockets, $i, $rotationMode);
                 $rotation = $i * 90;
 
                 if ($removeDuplicates) {
@@ -57,21 +78,19 @@ final class TilesFactory
     }
 
 
-    private static function rotateSockets($sockets, $rotations = 0) : array
+    private static function rotateSockets(array $sockets, int $rotations, int $rotationMode = 0) : array
     {
-        $rotationTransforms = [
-            ['N' => 'N', 'E' => 'E', 'S' => 'S', 'W' => 'W'],
-            ['N' => 'W', 'E' => 'N', 'S' => 'E', 'W' => 'S'],
-            ['N' => 'S', 'E' => 'W', 'S' => 'N', 'W' => 'E'],
-            ['N' => 'E', 'E' => 'S', 'S' => 'W', 'W' => 'N'],
-        ];
-        
         $output = [];
         
-        // TODO array keys
-        foreach ($sockets as $socketDirection => $socketValue) {
-            $transformedDirection = $rotationTransforms[$rotations][$socketDirection];
-            $output[$socketDirection] = $sockets[$transformedDirection];  
+        foreach (array_keys($sockets) as $socketDirection) {
+            $transformedDirection = self::ROTATION_TRANSFORMS[$rotations][$socketDirection];
+            $output[$socketDirection] = $sockets[$transformedDirection];
+
+            if ($rotationMode === self::ROTATION_ARRAY) {
+                if (self::DIRECTION_TYPES[$socketDirection] != self::DIRECTION_TYPES[$transformedDirection]) {
+                    $output[$socketDirection] = array_reverse($output[$socketDirection]);
+                }
+            }
         }
         
         return $output;

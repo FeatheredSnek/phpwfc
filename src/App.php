@@ -24,7 +24,6 @@ final class App
 
     public function run() : string
     {
-        // setup tiles
         $demoTiles = [
             new Tile('/tiles/demo/blank.png', ['N' => 0, 'E' => 0, 'S' => 0, 'W' => 0]),
             new Tile('/tiles/demo/down.png', ['N' => 0, 'E' => 1, 'S' => 1, 'W' => 1]),
@@ -34,7 +33,6 @@ final class App
         ];
 
         $circuitTiles = [
-            // new Tile('/tiles/circuit/0.png', ['N' => 'blk', 'E' => 'blk', 'S' => 'blk', 'W' => 'blk']),
             new Tile('/tiles/circuit/1.png', ['N' => 'grn', 'E' => 'grn', 'S' => 'grn', 'W' => 'grn']),
             new Tile('/tiles/circuit/2.png', ['N' => 'grn', 'E' => 'lim', 'S' => 'grn', 'W' => 'grn']),
             new Tile('/tiles/circuit/3.png', ['N' => 'grn', 'E' => 'whi', 'S' => 'grn', 'W' => 'whi']),
@@ -60,10 +58,50 @@ final class App
             new TileDefinition('/tiles/circuit/12.png', ['N' => 'grn', 'E' => 'lim', 'S' => 'grn', 'W' => 'lim'], true),
         ];
 
+        $fullCircuitTileDefinitionsPlain = [
+            new TileDefinition('/tiles/circuit/0.png', ['N' => 'blk-blk-blk', 'E' => 'blk-blk-blk', 'S' => 'blk-blk-blk', 'W' => 'blk-blk-blk']),
+            new TileDefinition('/tiles/circuit/1.png', ['N' => 'grn-grn-grn', 'E' => 'grn-grn-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-grn-grn']),
+            new TileDefinition('/tiles/circuit/2.png', ['N' => 'grn-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-grn-grn'], true),
+            new TileDefinition('/tiles/circuit/3.png', ['N' => 'grn-grn-grn', 'E' => 'grn-whi-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-whi-grn'], true),
+            new TileDefinition('/tiles/circuit/4.png', ['N' => 'blk-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-blk', 'W' => 'blk-blk-blk'], true),
+            new TileDefinition('/tiles/circuit/5.png', ['N' => 'blk-grn-grn', 'E' => 'grn-grn-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-grn-blk'], true),
+            new TileDefinition('/tiles/circuit/6.png', ['N' => 'grn-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-lim-grn'], true),
+            new TileDefinition('/tiles/circuit/7.png', ['N' => 'grn-whi-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-whi-grn', 'W' => 'grn-lim-grn'], true),
+            new TileDefinition('/tiles/circuit/8.png', ['N' => 'grn-whi-grn', 'E' => 'grn-grn-grn', 'S' => 'grn-lim-grn', 'W' => 'grn-grn-grn'], true),
+            new TileDefinition('/tiles/circuit/9.png', ['N' => 'grn-lim-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-lim-grn'], true),
+            new TileDefinition('/tiles/circuit/10.png', ['N' => 'grn-lim-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-lim-grn', 'W' => 'grn-lim-grn'], true),
+            new TileDefinition('/tiles/circuit/11.png', ['N' => 'grn-lim-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-grn-grn'], true),
+            new TileDefinition('/tiles/circuit/12.png', ['N' => 'grn-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-lim-grn'], true),
+        ];
+
+        $fullCircuitTileDefinitions = [
+            new TileDefinition('/tiles/circuit/0.png', ['N' => 'blk-blk-blk', 'E' => 'blk-blk-blk', 'S' => 'blk-blk-blk', 'W' => 'blk-blk-blk']),
+            new TileDefinition('/tiles/circuit/1.png', ['N' => 'grn-grn-grn', 'E' => 'grn-grn-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-grn-grn']),
+            new TileDefinition('/tiles/circuit/2.png', ['N' => 'grn-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-grn-grn'], true),
+            new TileDefinition('/tiles/circuit/3.png', ['N' => 'grn-grn-grn', 'E' => 'grn-whi-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-whi-grn'], true),
+            new TileDefinition('/tiles/circuit/4.png', ['N' => 'blk-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'blk-grn-grn', 'W' => 'blk-blk-blk'], true),
+            new TileDefinition('/tiles/circuit/5.png', ['N' => 'blk-grn-grn', 'E' => 'grn-grn-grn', 'S' => 'grn-grn-grn', 'W' => 'blk-grn-grn'], true),
+            new TileDefinition('/tiles/circuit/6.png', ['N' => 'grn-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-lim-grn'], true),
+            new TileDefinition('/tiles/circuit/7.png', ['N' => 'grn-whi-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-whi-grn', 'W' => 'grn-lim-grn'], true),
+            new TileDefinition('/tiles/circuit/8.png', ['N' => 'grn-whi-grn', 'E' => 'grn-grn-grn', 'S' => 'grn-lim-grn', 'W' => 'grn-grn-grn'], true),
+            new TileDefinition('/tiles/circuit/9.png', ['N' => 'grn-lim-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-lim-grn'], true),
+            new TileDefinition('/tiles/circuit/10.png', ['N' => 'grn-lim-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-lim-grn', 'W' => 'grn-lim-grn'], true),
+            new TileDefinition('/tiles/circuit/11.png', ['N' => 'grn-lim-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-grn-grn'], true),
+            new TileDefinition('/tiles/circuit/12.png', ['N' => 'grn-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-lim-grn'], true),
+        ];
+
         $circuitTileFactory = new TilesFactory($circuitTileDefinitions, true);
         $rotatedCircuitTiles = $circuitTileFactory->createTiles();
 
-        $tileSets = ['demo' => $demoTiles, 'circuit' => $circuitTiles, 'rotatedCircuit' => $rotatedCircuitTiles];
+        $fullCircuitTileFactory = new TilesFactory($fullCircuitTileDefinitions, true);
+        $fullCircuitTiles = $fullCircuitTileFactory->createTiles();
+
+        $tileSets = [
+            'demo' => $demoTiles, 
+            'circuit' => $circuitTiles, 
+            'rotatedCircuit' => $rotatedCircuitTiles,
+            'fullCircuit' => $fullCircuitTiles,
+        ];
         $allTiles = $tileSets[$this->tileSet];
 
         $generator = new Generator($this->size, $allTiles, $this->debug);
@@ -87,6 +125,7 @@ final class App
             $tileRotation = null;
             if (isset($cell->result)) {
                 $tileRotation = $cell->result->rotation;
+                // $cellContent = var_export($cell->result->sockets, 1);
             }
 
             $gridTiles[] = new GridTile($cell->xPos + 1, $cell->yPos + 1, $cellImagePath, $cellContent, $tileRotation);
