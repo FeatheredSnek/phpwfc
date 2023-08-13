@@ -19,7 +19,7 @@ class TileDefinition
     public const DELIMITER = '-';
 
 
-    public function __construct(string $image, array $sockets, bool $rotate = false) {
+    public function __construct(string $image, array $sockets, bool $rotate = true) {
         $this->image = $image;
         $this->rotate = $rotate;
 

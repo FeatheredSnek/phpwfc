@@ -21,6 +21,6 @@ class Cell extends AbstractCell
 
     public function getIdentifier() : string
     {
-        return "$this->xPos, $this->yPos"; 
+        return "x: $this->xPos, y: $this->yPos"; 
     }
 }

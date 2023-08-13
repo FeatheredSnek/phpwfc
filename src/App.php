@@ -16,9 +16,10 @@ final class App
     private bool $debug = false;
     
 
-    public function __construct(int $size = 10, string $tileSet = 'demo') {
+    public function __construct(int $size = 10, string $tileSet = 'demo', bool $debug = false) {
         $this->size = $size;
         $this->tileSet = $tileSet;
+        $this->debug = $debug;
     }
 
 
@@ -90,24 +91,58 @@ final class App
             new TileDefinition('/tiles/circuit/12.png', ['N' => 'grn-grn-grn', 'E' => 'grn-lim-grn', 'S' => 'grn-grn-grn', 'W' => 'grn-lim-grn'], true),
         ];
 
+
+        $customTestTileDefinitions = [
+            // new TileDefinition('/tiles/customTest/001.png', ['N' => 'B-B-B', 'E' => 'B-W-W', 'S' => 'W-W-W', 'W' => 'B-W-W']),
+            // new TileDefinition('/tiles/customTest/002.png', ['N' => 'B-B-B', 'E' => 'B-B-B', 'S' => 'W-W-B', 'W' => 'B-W-W']),
+            // new TileDefinition('/tiles/customTest/003.png', ['N' => 'B-B-B', 'E' => 'B-G-G', 'S' => 'W-G-W', 'W' => 'B-W-W']),
+            new TileDefinition('/tiles/customTest/004.png', ['N' => 'W-G-W', 'E' => 'W-W-W', 'S' => 'W-G-W', 'W' => 'W-W-W']),
+            new TileDefinition('/tiles/customTest/005.png', ['N' => 'W-G-W', 'E' => 'W-G-W', 'S' => 'W-W-W', 'W' => 'W-W-W']),
+            new TileDefinition('/tiles/customTest/006.png', ['N' => 'W-G-W', 'E' => 'W-W-W', 'S' => 'W-W-W', 'W' => 'W-W-W']),
+            // new TileDefinition('/tiles/customTest/007.png', ['N' => 'W-G-W', 'E' => 'W-T-W', 'S' => 'W-G-W', 'W' => 'W-T-W']),
+            // new TileDefinition('/tiles/customTest/008.png', ['N' => 'W-W-W', 'E' => 'W-W-W', 'S' => 'W-W-W', 'W' => 'W-T-W']),
+            // new TileDefinition('/tiles/customTest/009.png', ['N' => 'W-W-W', 'E' => 'W-T-W', 'S' => 'W-W-W', 'W' => 'W-T-W']),
+            // new TileDefinition('/tiles/customTest/010.png', ['N' => 'W-O-W', 'E' => 'W-T-W', 'S' => 'W-O-W', 'W' => 'W-T-W']),
+            new TileDefinition('/tiles/customTest/011.png', ['N' => 'P-P-P', 'E' => 'P-W-W', 'S' => 'W-O-W', 'W' => 'P-W-W']),
+            new TileDefinition('/tiles/customTest/012.png', ['N' => 'P-W-W', 'E' => 'W-W-W', 'S' => 'W-W-W', 'W' => 'P-W-W']),
+            new TileDefinition('/tiles/customTest/013.png', ['N' => 'P-P-P', 'E' => 'P-P-P', 'S' => 'P-P-P', 'W' => 'P-P-P']),
+            // new TileDefinition('/tiles/customTest/014.png', ['N' => 'W-O-W', 'E' => 'W-W-B', 'S' => 'B-B-B', 'W' => 'W-W-B']),
+            new TileDefinition('/tiles/customTest/015.png', ['N' => 'W-O-W', 'E' => 'W-W-W', 'S' => 'W-W-W', 'W' => 'W-W-W']),
+            new TileDefinition('/tiles/customTest/016.png', ['N' => 'W-O-W', 'E' => 'W-W-W', 'S' => 'W-W-W', 'W' => 'W-O-W']),
+            // new TileDefinition('/tiles/customTest/017.png', ['N' => 'V-V-V', 'E' => 'V-V-V', 'S' => 'V-V-V', 'W' => 'V-V-V']),
+            // new TileDefinition('/tiles/customTest/018.png', ['N' => 'V-V-V', 'E' => 'V-W-W', 'S' => 'W-W-W', 'W' => 'V-W-W']),
+            // new TileDefinition('/tiles/customTest/019.png', ['N' => 'V-W-W', 'E' => 'W-W-P', 'S' => 'W-W-P', 'W' => 'V-W-W']),
+            // new TileDefinition('/tiles/customTest/020.png', ['N' => 'R-R-W', 'E' => 'W-W-W', 'S' => 'R-R-W', 'W' => 'R-R-R']),
+            // new TileDefinition('/tiles/customTest/021.png', ['N' => 'R-R-W', 'E' => 'W-G-W', 'S' => 'R-R-W', 'W' => 'R-G-R']),
+            // new TileDefinition('/tiles/customTest/022.png', ['N' => 'R-R-R', 'E' => 'R-R-R', 'S' => 'R-R-R', 'W' => 'R-R-R']),
+            // new TileDefinition('/tiles/customTest/023.png', ['N' => 'R-R-R', 'E' => 'R-G-R', 'S' => 'R-R-R', 'W' => 'R-G-R']),
+            // new TileDefinition('/tiles/customTest/024.png', ['N' => 'R-R-W', 'E' => 'W-W-W', 'S' => 'W-W-W', 'W' => 'R-R-W']),
+            new TileDefinition('/tiles/customTest/025.png', ['N' => 'W-W-W', 'E' => 'W-W-W', 'S' => 'W-W-W', 'W' => 'W-W-W']),
+            new TileDefinition('/tiles/customTest/026.png', ['N' => 'W-W-W', 'E' => 'W-W-W', 'S' => 'W-W-W', 'W' => 'W-W-W']),
+        ];
+
         $circuitTileFactory = new TilesFactory($circuitTileDefinitions, true);
         $rotatedCircuitTiles = $circuitTileFactory->createTiles();
 
         $fullCircuitTileFactory = new TilesFactory($fullCircuitTileDefinitions, true);
         $fullCircuitTiles = $fullCircuitTileFactory->createTiles();
 
+        $customTestTileFactory = new TilesFactory($customTestTileDefinitions, true);
+        $customTestTiles = $customTestTileFactory->createTiles();
+
         $tileSets = [
             'demo' => $demoTiles, 
             'circuit' => $circuitTiles, 
             'rotatedCircuit' => $rotatedCircuitTiles,
             'fullCircuit' => $fullCircuitTiles,
+            'customTest' => $customTestTiles,
         ];
         $allTiles = $tileSets[$this->tileSet];
 
         $generator = new Generator($this->size, $allTiles, $this->debug);
 
         $cells2 = $generator
-            ->compute()
+            ->compute(1)
             ->getCells();
 
         $setup = new GridRendererSetup($this->size, $this->size, 30, $this->debug);

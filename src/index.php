@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL ^ E_WARNING); 
+
 include __DIR__ . '/output/StyleDef.php';
 include __DIR__ . '/output/HTMLElement.php';
 include __DIR__ . '/output/GridTile.php';
@@ -18,7 +20,7 @@ include __DIR__ . '/wfc/grid2d/TileDefinition.php';
 
 include __DIR__ . '/App.php';
 
-$app = new App(10, 'fullCircuit');
+$app = new App(4, 'customTest', true);
 echo $app->run();
 
 exit;
