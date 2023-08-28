@@ -2,8 +2,6 @@
 
 namespace WFC;
 
-use Exception;
-
 abstract class AbstractCell
 {
     public bool $collapsed = false;
@@ -18,11 +16,11 @@ abstract class AbstractCell
     public function collapse() : void
     {
         if (empty($this->options)) {
-            throw new Exception("no options available for cell {$this->getIdentifier()}");
+            throw new GeneratorException("no options available for cell {$this->getIdentifier()}");
         }
 
         if ($this->collapsed) {
-            throw new Exception("cell already collapsed with $this->result");
+            throw new GeneratorException("cell already collapsed with $this->result");
         }
 
         $this->collapsed = true;

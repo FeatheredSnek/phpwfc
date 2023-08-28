@@ -6,10 +6,10 @@ use Exception;
 
 abstract class AbstractGenerator
 {
-    public int $size;
-    public array $tiles;
-    
+    protected int $size;
+    protected array $tiles;
     protected array $cells = [];
+    protected bool $completed = false;
     protected bool $debug = false;
     protected bool $verbose = false;
 
@@ -33,11 +33,16 @@ abstract class AbstractGenerator
                 try {
                     $result = $this->observe();
                 } catch (Exception $e) {
-                    break;
+                    if ($e instanceof GeneratorException) {
+                        break;
+                    } else {
+                        throw $e;
+                    }
                 }
             }
 
             if ($result instanceof AbstractGenerator) {
+                $this->completed = true;
                 break;
             }
 
@@ -141,4 +146,8 @@ abstract class AbstractGenerator
         return $this->cells;
     }
 
+    public function getCompletionStatus() : bool
+    {
+        return $this->completed;
+    }
 }
