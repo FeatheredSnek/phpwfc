@@ -18,6 +18,8 @@ include __DIR__ . '/src/wfc/grid2d/Generator.php';
 include __DIR__ . '/src/wfc/grid2d/TilesFactory.php';
 include __DIR__ . '/src/wfc/grid2d/TileDefinition.php';
 
+include __DIR__ . '/src/tilesets/TilesetManager.php';
+
 include __DIR__ . '/src/App.php';
 
 $app = new App(15, 'space', false);
