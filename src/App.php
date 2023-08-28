@@ -26,11 +26,11 @@ final class App
     public function run() : string
     {
         $demoTiles = [
-            new Tile('../tiles/demo/blank.png', ['N' => 0, 'E' => 0, 'S' => 0, 'W' => 0]),
-            new Tile('../tiles/demo/down.png', ['N' => 0, 'E' => 1, 'S' => 1, 'W' => 1]),
-            new Tile('../tiles/demo/left.png', ['N' => 1, 'E' => 0, 'S' => 1, 'W' => 1]),
-            new Tile('../tiles/demo/right.png', ['N' => 1, 'E' => 1, 'S' => 1, 'W' => 0]),
-            new Tile('../tiles/demo/up.png', ['N' => 1, 'E' => 1, 'S' => 0, 'W' => 1]),
+            new Tile('../tiles/demo/blank.png', ['N' => '0', 'E' => '0', 'S' => '0', 'W' => '0']),
+            new Tile('../tiles/demo/down.png', ['N' => '0', 'E' => '1', 'S' => '1', 'W' => '1']),
+            new Tile('../tiles/demo/left.png', ['N' => '1', 'E' => '0', 'S' => '1', 'W' => '1']),
+            new Tile('../tiles/demo/right.png', ['N' => '1', 'E' => '1', 'S' => '1', 'W' => '0']),
+            new Tile('../tiles/demo/up.png', ['N' => '1', 'E' => '1', 'S' => '0', 'W' => '1']),
         ];
 
         $circuitTileDefinitions = [

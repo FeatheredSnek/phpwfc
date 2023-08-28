@@ -7,9 +7,9 @@ abstract class AbstractTile
     protected $resource;
     public array $sockets;
     
-    abstract public function getSocketAtDirection(string $direction) : array;
+    abstract public function getSocketAtDirection(string $direction) : array|string;
 
-    abstract public function getRequiredSocketAtDirection(string $direction) : array;
+    abstract public function getRequiredSocketAtDirection(string $direction) : array|string;
     
     abstract public function getResource();
 

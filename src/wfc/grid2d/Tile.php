@@ -19,12 +19,12 @@ class Tile extends AbstractTile
         $this->rotation = $rotation;
     }
 
-    public function getSocketAtDirection(string $direction) : array
+    public function getSocketAtDirection(string $direction) : array|string
     {
         return $this->sockets[$direction];
     }
 
-    public function getRequiredSocketAtDirection(string $direction) : array
+    public function getRequiredSocketAtDirection(string $direction) : array|string
     {
         return $this->sockets[self::getOpposite($direction)];
     }
