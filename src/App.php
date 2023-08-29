@@ -12,6 +12,10 @@ final class App
     protected string $tileSet = 'demo';
     protected bool $debug = false;
 
+    protected bool $completionStatus = false;
+    protected string $renderedResult = '';
+    protected Exception $error;
+
     public function __construct(int $size = 10, string $tileSet = 'demo', bool $debug = false)
     {
         $this->size = $size;
@@ -19,45 +23,70 @@ final class App
         $this->debug = $debug;
     }
 
-    public function run() : string
+    public function run() : void
     {
-        $tiles = TilesetManager::getTileset($this->tileSet);
-        $generator = new Generator($this->size, $tiles, $this->debug);
+        try {
+            $tiles = TilesetManager::getTileset($this->tileSet);
+            $generator = new Generator($this->size, $tiles, $this->debug);
 
-        $cells = $generator
-            ->compute()
-            ->getCells();
+            $cells = $generator
+                ->compute()
+                ->getCells();
 
-        $gridTiles = [];
-        
-        foreach ($cells as $index => $cell) {
-            $cellImagePath = isset($cell->result) ? "url($cell->result)" : null;
-            $cellContent = '';
+            $gridTiles = [];
             
-            $debugSocketInfo = null;
-            if ($this->debug) {
-                $cellContent = (string) $index;
-                $debugSocketInfo = var_export($cell->result->sockets, 1);
+            foreach ($cells as $index => $cell) {
+                $cellImagePath = isset($cell->result) ? "url($cell->result)" : null;
+                $cellContent = '';
+                
+                $debugSocketInfo = null;
+                if ($this->debug) {
+                    $cellContent = (string) $index;
+                    $debugSocketInfo = var_export($cell->result->sockets, 1);
+                }
+
+                $tileRotation = null;
+                if (isset($cell->result)) {
+                    $tileRotation = $cell->result->rotation;
+                }
+
+                $gridTiles[] = new GridTile(
+                    $cell->xPos + 1, 
+                    $cell->yPos + 1, 
+                    $cellImagePath, 
+                    $cellContent, 
+                    $tileRotation, 
+                    $debugSocketInfo
+                );
             }
 
-            $tileRotation = null;
-            if (isset($cell->result)) {
-                $tileRotation = $cell->result->rotation;
-            }
+            $rendererSetup = new GridRendererSetup($this->size, $this->size, 30, $this->debug);
+            $renderer = new GridRenderer($rendererSetup, $gridTiles);
 
-            $gridTiles[] = new GridTile(
-                $cell->xPos + 1, 
-                $cell->yPos + 1, 
-                $cellImagePath, 
-                $cellContent, 
-                $tileRotation, 
-                $debugSocketInfo
-            );
+            $this->renderedResult = $renderer->render();
+            $this->completionStatus = $generator->getCompletionStatus();
+        } catch (Exception $e) {
+            $this->error = $e;
+            return;
         }
+    }
 
-        $rendererSetup = new GridRendererSetup($this->size, $this->size, 30, $this->debug);
-        $renderer = new GridRenderer($rendererSetup, $gridTiles);
+    public function getResult() : string
+    {
+        return $this->renderedResult;
+    }
 
-        return $renderer->render();
+    public function getCompletionStatus() : bool
+    {
+        return $this->completionStatus;
+    }
+
+    public function getError() : ?string
+    {
+        if (isset($this->error)) {
+            return $this->error->getMessage();
+        } else {
+            return null;
+        }
     }
 }
