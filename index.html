@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP-WFC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>PHP-<span class="alt">WFC</span></h1>
+        </header>
+        <form action="phpwfc.php" method="get">
+            <div class="size-container">
+                <label for="size" class="label-main">Grid size (3 - 15)</label>
+                <input name="size" id="size" type="number" min="3" max="15" value="10" />
+            </div>
+            <div class="tileset-container">
+                <label for="tileset-group" class="label-main">Tileset</label>
+                <div role="group" id="tileset-group">
+                    <div class="radio-container">
+                        <input name="tileset" id="tileset-demo" type="radio" value="demo" />
+                        <label for="tileset-demo">Simple demo</label>
+                    </div>
+                    <div class="radio-container">
+                        <input name="tileset" id="tileset-circuit" type="radio" value="circuit" />
+                        <label for="tileset-circuit">Circuit board</label>
+                    </div>
+                    <div class="radio-container">
+                        <input name="tileset" id="tileset-floor" type="radio" value="floor" />
+                        <label for="tileset-floor">Floor plan</label>
+                    </div>
+                    <div class="radio-container">
+                        <input name="tileset" id="tileset-space" type="radio" value="space" checked />
+                        <label for="tileset-space">Space station</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Generate!</button>
+        </form>
+    </main>
+</body>
+
+</html>
