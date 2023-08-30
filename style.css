@@ -1,6 +1,7 @@
-@font-face {
-    font-family: 'uni0553';
-    src: url('assets/uni0553-webfont.woff') format('woff');
+@import url('https://fonts.cdnfonts.com/css/somybmp017');
+
+* {
+    box-sizing: border-box;
 }
 
 :root {
@@ -11,34 +12,73 @@
     --bg-dark: #161737;
     --text-main: #e6bebf;
     --text-alt: #e3ddda;
-    --input-inner: #682d57;
-    --input-border: #22111c;
-    --input-alt: #aa507d;
+    --main-border: #050812;
 
-    --button-dark: #2a3054;
-    --button-light: #775b9f;
+    --border-width: 3px;
 
-    --input-border-style: 2px solid var(--input-border);
+    --input-inner: #3d3b6e;
+    --input-border: #161737;
+    --input-alt: #775b9f;
+    --input-text: #e3ddda;
+
+    --button-light: #aa507d;
+    --button-dark: #682d57;
+    --button-text: #eef2eb;
+    --button-border: #22111c;
+
+    --footer-dark: #1a1f30;
+    --footer-light: #353a5d;
+    --footer-text: #a193f2;
+
+    --error-bg: #ba0945;
+    --error-text: var(--text-alt);
+
+    --warning-bg: var(--bg-main);
+    --warning-text: var(--text-main);
+
+    --input-border-style: var(--border-width) solid var(--input-border);
+    --font-pixel: 'somybmp01_7';
+}
+
+html {
+    font-size: 20px;
 }
 
 body {
-    font-family: 'uni0553';
+    margin-top: 2rem;
+    line-height: 1.5rem;
+    font-family: var(--font-pixel);
     color: var(--text-main);
     background-color: var(--bg-dark);
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
-main, header, form {
+main, header, form, footer {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-main {
+.content {
     margin: auto;
+    min-width: 300px;
+}
+
+.content.homepage {
     width: max-content;
-    padding: 1rem 2rem 1.6rem 2rem;
+}
+
+.content.output {
+    width: min-content;
+}
+
+.generator {
+    padding: 1.8rem 2rem 1.6rem 2rem;
     background-color: var(--bg-main);
-    border: 2px solid black;
+    border: var(--border-width) solid var(--main-border);
+    /* margin-bottom: 1rem; */
 }
 
 header {
@@ -66,11 +106,11 @@ form>div {
 input[type='number'] {
     width: 4rem;
     font-size: 1rem;
-    padding: 0.2rem 0.5rem;
-    font-family: 'uni0553';
-    color: var(--text-main);
+    padding: 0.4rem 0.4rem 0.2rem 0.4rem;
+    font-family: var(--font-pixel);
+    color: var(--input-text);
     background-color: var(--input-inner);
-    border: 2px solid var(--input-border);
+    border: var(--input-border-style);
     box-shadow: none;
     -moz-appearance: textfield;
     -webkit-appearance: none;
@@ -84,12 +124,12 @@ input[type="radio"], input[type="checkbox"] {
     appearance: none;
     cursor: pointer;
     margin: 0;
-    margin-right: 0.4rem;
+    margin-right: 0.5rem;
     background-color: var(--input-inner);
-    border: 2px solid var(--input-border);
+    border: var(--input-border-style);
     width: 1.2rem;
     height: 1.2rem;
-    transform: translateY(0.1rem);
+    transform: translateY(-0.1rem);
     display: grid;
     place-content: center;
 }
@@ -99,7 +139,7 @@ input[type="radio"]::before {
     width: 0.6rem;
     height: 0.6rem;
     transform: scale(0);
-    box-shadow: inset 1em 1em var(--text-main);
+    box-shadow: inset 1em 1em var(--input-text);
 }
 
 input[type="checkbox"]::before {
@@ -138,20 +178,84 @@ div[role='group'] {
 
 button {
     margin-top: 0.5rem;
-    padding-bottom: 0.2rem;
+    padding-top: 0.3rem;
+    /* padding-bottom: 0.2rem; */
     height: 3rem;
     text-align: center;
     font-size: 1.2rem;
-    font-family: 'uni0553';
+    font-family: var(--font-pixel);
     width: 100%;
     cursor: pointer;
-    color: var(--text-main);
-    background-color: var(--input-inner);
-    border: 2px solid var(--input-border);
+    color: var(--button-text);
+    background-color: var(--button-light);
+    /* background-color: var(--input-inner); */
+    border: var(--border-width) solid var(--button-border)  ;
     box-shadow: none;
 }
 
 button:focus-visible {
     outline: 2px solid var(--input-alt);
     outline-offset: 1px;
+}
+
+button:hover {
+    /* background-color: var(--input-alt); */
+    background-color: var(--button-dark);
+}
+
+footer {
+    width: 100%;
+}
+
+footer button {
+    border: var(--border-width) solid var(--main-border);
+    background-color: var(--footer-light);
+    color: var(--footer-text);
+}
+
+footer button:hover {
+    background-color: var(--footer-dark);
+}
+
+footer button:focus-visible {
+    outline: 2px solid var(--footer-light);
+    outline-offset: 2px;
+}
+
+svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.result {
+    width: fit-content;
+    border: var(--border-width) solid var(--main-border);
+}
+
+.notice, output footer button {
+    min-width: 250px;
+}
+
+.notice {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    padding: 1rem 1.5rem;
+    border: var(--border-width) solid var(--main-border);
+}
+
+.notice span {
+    padding-top: 0.2rem;
+}
+
+.notice.error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+}
+
+.notice.warning {
+    margin-top: 0.5rem;
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
 }

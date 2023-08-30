@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ALL ^ E_WARNING); 
-
 include __DIR__ . '/src/output/StyleDef.php';
 include __DIR__ . '/src/output/HTMLElement.php';
 include __DIR__ . '/src/output/GridTile.php';
@@ -22,6 +20,8 @@ include __DIR__ . '/src/wfc/grid2d/TileDefinition.php';
 include __DIR__ . '/src/tilesets/TilesetManager.php';
 
 include __DIR__ . '/src/App.php';
+
+include __DIR__ . '/render.php';
 
 $size = 15;
 $tileset = 'space';
@@ -46,20 +46,12 @@ if (isset($_GET['debug'])) {
 
 $app = new App($size, $tileset, $debug);
 $app->run();
-
-
-$html = '';
-
 $errors = $app->getError();
-if (isset($errors)) {
-    $html .= "<div class='error-fatal'>$errors</div>";
-} else {
-    $html .= "<div class='result'>{$app->getResult()}</div>";
-    if ($app->getCompletionStatus() === false) {
-        $html .= "<div class='error-unfinished'>WFC has not been able to finish within the preset attempt limit</div>";
-    }
-}
 
-echo $html;
+if (isset($errors)) {
+    echo renderError($errors);
+} else {
+    echo renderResult($app->getResult(), $app->getCompletionStatus());
+}
 
 exit;
