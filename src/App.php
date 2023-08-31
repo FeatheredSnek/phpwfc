@@ -26,6 +26,10 @@ final class App
     public function run() : void
     {
         try {
+            if ($this->size < 4 || $this->size > 15) {
+                throw new Exception("Invalid size: min 3, max 15, $this->size given");
+            }
+
             $tiles = TilesetManager::getTileset($this->tileSet);
             $generator = new Generator($this->size, $tiles, $this->debug);
 
