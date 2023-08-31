@@ -70,6 +70,10 @@ footer {
     width: 100%;
 }
 
+a {
+    text-decoration: none;
+}
+
 .container {
     margin: auto;
     min-width: 300px;
@@ -183,6 +187,9 @@ button:focus-visible {
 }
 
 .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 0.5rem;
     padding-top: 0.3rem;
     width: 100%;

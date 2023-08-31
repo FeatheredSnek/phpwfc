@@ -16,8 +16,8 @@ function embed($html) {
             <main class='container container--output'>
                 $html
                 <footer>
-                    <button class='button link-button output-button'>Retry</button>
-                    <button class='button link-button output-button'>Back</button>
+                    <button onclick='document.location.reload()' class='button link-button output-button'>Retry</button>
+                    <a href='https://dorianm.com/demos/php-wfc' class='button link-button output-button'>Home</a>
                 </footer>
             </main>
         </body>
