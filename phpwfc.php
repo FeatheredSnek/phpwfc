@@ -28,12 +28,7 @@ $tileset = 'space';
 $debug = false;
 
 if (isset($_GET['size'])) {
-    $sizeParam = (int) $_GET['size'];
-    if ($sizeParam > 2 && $sizeParam < 16) {
-        $size = $sizeParam;
-    } else {
-        throw new Exception('invalid size');
-    }
+    $size = (int) $_GET['size'];
 }
 
 if (isset($_GET['tileset'])) {
