@@ -13,14 +13,13 @@ function embed($html) {
         </head>
 
         <body>
-            <main class='content output'>
+            <main class='container container--output'>
                 $html
                 <footer>
-                    <button>Retry</button>
-                    <button>Back</button>
+                    <button class='button link-button output-button'>Retry</button>
+                    <button class='button link-button output-button'>Back</button>
                 </footer>
             </main>
-
         </body>
 
         </html>
@@ -29,8 +28,8 @@ function embed($html) {
 
 function renderError($error) : string {
         $html = "
-            <div class='notice error'>
-                <span>$error</span>
+            <div class='notice notice--error'>
+                <span class='notice-message'>$error</span>
             </div>
         ";
     return embed($html);
@@ -40,8 +39,8 @@ function renderResult($result, $isComplete) : string {
     $html = "<div class='result'>$result</div>";
     if (!$isComplete) {
         $html .= "
-            <div class='notice warning'>
-                <span>
+            <div class='notice notice--warning'>
+                <span class='notice-message'>
                     WFC algorithm has not been able to compute the result within the preset attempt limit.
                 </span>
             </div>

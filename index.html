@@ -9,50 +9,48 @@
 </head>
 
 <body>
-    <div class="content homepage">
-    <main class="generator">
-        <header>
-            <h1>PHP-<span class="alt">WFC</span></h1>
-        </header>
-        <form action="phpwfc.php" method="get">
-            <div class="size-container">
-                <label for="size" class="label-main">Grid size (3-15)</label>
-                <input name="size" id="size" type="number" min="3" max="15" value="10" />
-            </div>
-            <div class="tileset-container">
-                <label for="tileset-group" class="label-main">Tileset</label>
-                <div role="group" id="tileset-group">
-                    <div class="radio-container">
-                        <input name="tileset" id="tileset-demo" type="radio" value="demo" />
-                        <label for="tileset-demo">Simple demo</label>
-                    </div>
-                    <div class="radio-container">
-                        <input name="tileset" id="tileset-circuit" type="radio" value="circuit" />
-                        <label for="tileset-circuit">Circuit board</label>
-                    </div>
-                    <div class="radio-container">
-                        <input name="tileset" id="tileset-floor" type="radio" value="floor" />
-                        <label for="tileset-floor">Floor plan</label>
-                    </div>
-                    <div class="radio-container">
-                        <input name="tileset" id="tileset-space" type="radio" value="space" checked />
-                        <label for="tileset-space">Space station</label>
+    <div class="container container--homepage">
+        <main class="generator">
+            <header class="generator-header">
+                <h1 class="header-text">PHP-WFC</h1>
+            </header>
+            <form action="phpwfc.php" method="get" class="generator-form">
+                <div class="form-field form-size">
+                    <label for="size" class="form-label">Grid size (3-15)</label>
+                    <input name="size" id="size" type="number" min="3" max="15" value="10" />
+                </div>
+                <div class="form-field form-tileset">
+                    <label for="tileset-group" class="form-label">Tileset</label>
+                    <div role="group" id="tileset-group" class="form-tileset-group">
+                        <div class="radio-container">
+                            <input name="tileset" id="tileset-demo" type="radio" value="demo" />
+                            <label class="radio-label" for="tileset-demo">Simple demo</label>
+                        </div>
+                        <div class="radio-container">
+                            <input name="tileset" id="tileset-circuit" type="radio" value="circuit" />
+                            <label class="radio-label" for="tileset-circuit">Circuit board</label>
+                        </div>
+                        <div class="radio-container">
+                            <input name="tileset" id="tileset-floor" type="radio" value="floor" />
+                            <label class="radio-label" for="tileset-floor">Floor plan</label>
+                        </div>
+                        <div class="radio-container">
+                            <input name="tileset" id="tileset-space" type="radio" value="space" checked />
+                            <label class="radio-label" for="tileset-space">Space station</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <button type="submit">Generate!</button>
-        </form>
-    </main>
-    <footer>
-        <button>
-        <!-- <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M8 5h2v2H8V5zM6 7h2v2H6V7zM4 9h2v2H4V9zm-2 2h2v2H2v-2zm2 2h2v2H4v-2zm2 2h2v2H6v-2zm2 2h2v2H8v-2zm8-12h-2v2h2V5zm2 2h-2v2h2V7zm2 2h-2v2h2V9zm2 2h-2v2h2v-2zm-2 2h-2v2h2v-2zm-2 2h-2v2h2v-2zm-2 2h-2v2h2v-2z" fill="currentColor"/> </svg> -->
-        GitHub repo 
-        </button>
-        <button>
-            <!-- <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M8 5h2v2H8V5zM6 7h2v2H6V7zM4 9h2v2H4V9zm-2 2h2v2H2v-2zm2 2h2v2H4v-2zm2 2h2v2H6v-2zm2 2h2v2H8v-2zm8-12h-2v2h2V5zm2 2h-2v2h2V7zm2 2h-2v2h2V9zm2 2h-2v2h2v-2zm-2 2h-2v2h2v-2zm-2 2h-2v2h2v-2zm-2 2h-2v2h2v-2z" fill="currentColor"/> </svg> -->
-            Other stuff
+                <button type="submit" class="button form-generate-button">Generate!</button>
+            </form>
+        </main>
+        <footer>
+            <button class="button link-button">
+                GitHub repo
             </button>
-    </footer>
+            <button class="button link-button">
+                Other stuff
+            </button>
+        </footer>
     </div>
 </body>
 
